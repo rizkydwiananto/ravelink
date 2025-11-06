@@ -7,5 +7,11 @@
     { "id": 1, "label": "Jakarta" },
     { "id": 2, "label": "Bandung" },
     { "id": 3, "label": "Surabaya" }
+  ],
+  "categories": [
+    { "id": 1, "label": "Countries", "icon": "IC_Countries" },
+    { "id": 2, "label": "Mountains", "icon": "IC_Mountain" },
+    { "id": 3, "label": "Beach", "icon": "IC_Beach" },
+    { "id": 4, "label": "Camp", "icon": "IC_Camp" }
   ]
 }

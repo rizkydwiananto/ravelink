@@ -1,4 +1,10 @@
-import { StatusBar, StyleSheet, useColorScheme } from 'react-native';
+import {
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Categories, HeaderIndex } from '../components';
 import { Gap } from '../utils';
@@ -19,7 +25,9 @@ export default function HomeScreen() {
 
       <Categories />
 
-      <Gap height={20} />
+      <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+        <Text>Popular</Text>
+      </View>
     </SafeAreaView>
   );
 }
