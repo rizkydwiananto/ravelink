@@ -1,0 +1,11 @@
+{
+  "genders": [
+    { "id": 1, "label": "Laki-laki" },
+    { "id": 2, "label": "Perempuan" }
+  ],
+  "cities": [
+    { "id": 1, "label": "Jakarta" },
+    { "id": 2, "label": "Bandung" },
+    { "id": 3, "label": "Surabaya" }
+  ]
+}
