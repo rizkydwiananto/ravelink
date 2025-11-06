@@ -1,9 +1,52 @@
-import { IC_Countries } from '@/assets/icons';
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { IC_Beach, IC_Camp, IC_Countries, IC_Mountain } from '@/assets/icons';
+import React, { useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Gap } from '../../utils';
+import apiDummy from '../../utils/apiDummy.json';
+
+type Category = {
+  id: number;
+  label: string;
+  icon: string;
+};
 
 const Categories = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const icons = {
+    IC_Countries: IC_Countries,
+    IC_Mountain: IC_Mountain,
+    IC_Beach: IC_Beach,
+    IC_Camp: IC_Camp,
+  };
+
+  useEffect(() => {
+    // Simulasi loading biar ada efek spinner sebentar
+    const timer = setTimeout(() => {
+      setCategories(apiDummy.categories);
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator color="#0DA96E" />
+        <Text style={styles.loaderText}>Loading Categories...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.labelContainer}>
@@ -15,27 +58,32 @@ const Categories = () => {
 
       <Gap height={20} />
 
-      <View>
-        <TouchableOpacity style={styles.box}>
-          <View style={styles.icon}>
-            <IC_Countries />
-          </View>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.scrollView}
+      >
+        <View style={styles.contentScroll}>
+          {categories.map((item, index) => {
+            const IconComponent = icons[item.icon as keyof typeof icons];
+            return (
+              <React.Fragment key={item.id}>
+                <TouchableOpacity style={styles.box}>
+                  <View style={styles.icon}>
+                    {IconComponent ? <IconComponent /> : null}
+                  </View>
 
-          <Gap height={7} />
+                  <Gap height={7} />
 
-          <Text style={styles.title}>Countries</Text>
-        </TouchableOpacity>
+                  <Text style={styles.title}>{item.label}</Text>
+                </TouchableOpacity>
 
-        <TouchableOpacity style={styles.box}>
-          <View style={styles.icon}>
-            <IC_Countries />
-          </View>
-
-          <Gap height={7} />
-
-          <Text style={styles.title}>Countries</Text>
-        </TouchableOpacity>
-      </View>
+                <Gap width={25} />
+              </React.Fragment>
+            );
+          })}
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -61,6 +109,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    shadowColor: '#acacac',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1, // 12% opacity
+    shadowRadius: 20,
+    elevation: 5,
   },
   icon: {
     width: 81,
@@ -71,4 +124,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: { fontSize: 13, fontFamily: 'Poppins-Medium' },
+  contentScroll: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingRight: 24,
+  },
+  scrollView: { marginLeft: -24, paddingLeft: 24 },
+  loaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 40,
+  },
+  loaderText: {
+    fontFamily: 'Poppins-Regular',
+    color: '#555',
+    marginLeft: 8,
+  },
 });
