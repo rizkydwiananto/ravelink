@@ -4,6 +4,7 @@ import DatePickerModal from './DatePickerModal';
 import Header from './Header';
 import HeaderIndex from './HeaderIndex';
 import ModalSelect, { Option } from './Modal';
+import Places from './Places';
 import TextInput from './TextInput';
 
 export {
@@ -14,6 +15,7 @@ export {
   HeaderIndex,
   ModalSelect,
   Option,
+  Places,
   TextInput,
 };
 

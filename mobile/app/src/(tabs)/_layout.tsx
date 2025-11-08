@@ -9,9 +9,10 @@ import {
   IC_MessageActive,
 } from '@/assets/icons';
 import { Tabs } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, useColorScheme, View } from 'react-native';
 import {
-  SafeAreaProvider,
+  SafeAreaView,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 
@@ -20,54 +21,56 @@ export default function TabsLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <SafeAreaProvider style={{ backgroundColor: '#F3F9F7', flex: 1 }}>
-      <Tabs
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarShowLabel: false,
-          tabBarStyle: [styles.tabBar],
-          tabBarIconStyle: styles.iconContainer,
-        })}
-      >
-        <Tabs.Screen
-          name="Home"
-          options={{
-            tabBarIcon: ({ focused }) =>
-              focused ? <IC_HomeActive /> : <IC_Home />,
-          }}
+    <View style={{ flex: 1, backgroundColor: '#000' }}>
+      <StatusBar backgroundColor="#000" hidden={false} />
+      <SafeAreaView edges={['top']} style={{ flex: 1 }}>
+        <Tabs
+          screenOptions={({ route }) => ({
+            headerShown: false,
+            tabBarShowLabel: false,
+            tabBarStyle: [styles.tabBar],
+            tabBarIconStyle: styles.iconContainer,
+          })}
+        >
+          <Tabs.Screen
+            name="Home"
+            options={{
+              tabBarIcon: ({ focused }) =>
+                focused ? <IC_HomeActive /> : <IC_Home />,
+            }}
+          />
+          <Tabs.Screen
+            name="History"
+            options={{
+              tabBarIcon: ({ focused }) =>
+                focused ? <IC_HistoryActive /> : <IC_History />,
+            }}
+          />
+          <Tabs.Screen
+            name="Like"
+            options={{
+              tabBarIcon: ({ focused }) =>
+                focused ? <IC_LikeActive /> : <IC_Like />,
+            }}
+          />
+          <Tabs.Screen
+            name="Message"
+            options={{
+              tabBarIcon: ({ focused }) =>
+                focused ? <IC_MessageActive /> : <IC_Message />,
+            }}
+          />
+        </Tabs>
+        <View
+          style={[
+            {
+              height: insets.bottom,
+              backgroundColor: colorScheme === 'dark' ? '#000' : 'transparent',
+            },
+          ]}
         />
-        <Tabs.Screen
-          name="History"
-          options={{
-            tabBarIcon: ({ focused }) =>
-              focused ? <IC_HistoryActive /> : <IC_History />,
-          }}
-        />
-        <Tabs.Screen
-          name="Like"
-          options={{
-            tabBarIcon: ({ focused }) =>
-              focused ? <IC_LikeActive /> : <IC_Like />,
-          }}
-        />
-        <Tabs.Screen
-          name="Message"
-          options={{
-            tabBarIcon: ({ focused }) =>
-              focused ? <IC_MessageActive /> : <IC_Message />,
-          }}
-        />
-      </Tabs>
-      <View
-        style={[
-          styles.safeAreaTabs,
-          {
-            height: insets.bottom,
-            backgroundColor: colorScheme === 'dark' ? '#000' : 'transparent',
-          },
-        ]}
-      />
-    </SafeAreaProvider>
+      </SafeAreaView>
+    </View>
   );
 }
 
@@ -76,13 +79,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#0DA96E',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    height: 80,
-    overflow: 'hidden',
+    height: 70,
+    position: 'absolute',
   },
   iconContainer: {
-    marginVertical: 20,
-  },
-  safeAreaTabs: {
-    backgroundColor: 'dark', // match the tab bar color (can be changed)
+    marginVertical: 15,
   },
 });
