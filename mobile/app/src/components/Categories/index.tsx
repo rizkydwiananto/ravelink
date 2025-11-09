@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingRight: 24,
   },
-  scrollView: { marginLeft: -24, paddingLeft: 24 },
+  scrollView: { marginLeft: -24, paddingLeft: 24, paddingBottom: 24 },
   loaderContainer: {
     flexDirection: 'row',
     alignItems: 'center',

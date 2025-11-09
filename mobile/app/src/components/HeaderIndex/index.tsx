@@ -1,23 +1,76 @@
+import { IC_Back } from '@/assets/icons';
+import { useNavigation } from '@react-navigation/native';
+import { Href, router } from 'expo-router';
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type HeaderIndexProps = {
+  titleProfile?: string;
   title?: string;
+  backButton?: boolean;
+  profile?: boolean;
+  pages?: Href;
 };
 
-const HeaderIndex: React.FC<HeaderIndexProps> = ({ title }) => {
+const HeaderIndex: React.FC<HeaderIndexProps> = ({
+  title,
+  titleProfile,
+  backButton,
+  profile,
+  pages,
+}) => {
+  const navigation = useNavigation() as any;
+
+  const handleBack = () => {
+    if (pages) {
+      router.push(pages); // ke halaman tertentu
+      return;
+    }
+
+    // Prefer navigating back in the navigation stack when available
+    try {
+      if (navigation && typeof navigation.canGoBack === 'function') {
+        if (navigation.canGoBack()) {
+          navigation.goBack();
+          return;
+        }
+      }
+    } catch {
+      // ignore and fallback
+    }
+
+    // Fallback to a safe route when no back history exists
+    router.replace('/src/(tabs)/Home');
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.avatar}>
-        <Image
-          source={require('./../../../../assets/images/photo_profile.png')}
-          style={styles.avatarImage}
-        />
-      </View>
+      {backButton && (
+        <TouchableOpacity onPress={handleBack}>
+          <IC_Back />
+        </TouchableOpacity>
+      )}
 
-      <View>
-        <Text style={styles.title}>Hi, {title}!</Text>
-        <Text style={styles.subTitle}>Where do you want to go ?</Text>
+      {profile && (
+        <>
+          <View style={styles.avatar}>
+            <Image
+              source={require('./../../../../assets/images/photo_profile.png')}
+              style={styles.avatarImage}
+            />
+          </View>
+
+          <View>
+            <Text style={styles.titleProfile}>Hi, {titleProfile}!</Text>
+            <Text style={styles.subTitleProfile}>
+              Where do you want to go ?
+            </Text>
+          </View>
+        </>
+      )}
+
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>{title}</Text>
       </View>
     </View>
   );
@@ -35,6 +88,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  containerButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textContainer: {
+    paddingVertical: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+  title: {
+    fontSize: 22,
+    fontFamily: 'Poppins-Medium',
+  },
+  subTitle: { fontSize: 14, fontFamily: 'Poppins-Light' },
   avatar: {
     marginRight: 24,
     height: 54,
@@ -51,6 +120,10 @@ const styles = StyleSheet.create({
     elevation: 4, // Android
   },
   avatarImage: { height: 54, width: 54, borderRadius: 54 / 2 },
-  title: { fontSize: 18, fontFamily: 'Poppins-Medium' },
-  subTitle: { fontSize: 14, fontFamily: 'Poppins-Light', color: '#939394' },
+  titleProfile: { fontSize: 18, fontFamily: 'Poppins-Medium' },
+  subTitleProfile: {
+    fontSize: 14,
+    fontFamily: 'Poppins-Light',
+    color: '#939394',
+  },
 });

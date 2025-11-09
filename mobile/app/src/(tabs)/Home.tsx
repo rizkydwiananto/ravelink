@@ -2,35 +2,54 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  useColorScheme,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import { Categories, HeaderIndex, Places } from '../components';
 import { Gap } from '../utils';
 
 export default function HomeScreen() {
-  const colorScheme = useColorScheme();
   return (
     <View style={styles.page}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <HeaderIndex title="Rizky" />
+        <HeaderIndex titleProfile="Rizky" profile={true} />
 
         <Gap height={20} />
 
         <Categories />
 
-        <Gap height={50} />
+        <Gap height={26} />
 
         <View style={styles.containerPopular}>
           <View style={styles.headerPopular}>
             <Text style={styles.labelPopular}>Popular</Text>
-            <Text style={styles.seeMorePopular}>See More</Text>
+            <TouchableOpacity>
+              <Text style={styles.seeMorePopular}>See More</Text>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.listPopular}>
-            <Places />
-            <Places />
-            <Places />
+            <Places
+              price={290}
+              title="Beautiful Place"
+              location="Bali, Indonesia"
+              rating={4.9}
+              image={require('../../../assets/images/beachTheFree.png')}
+            />
+            <Places
+              price={950}
+              title="Mountain The Great Twins"
+              location="Bogor, Indonesia"
+              rating={4.5}
+              image={require('../../../assets/images/mountainTheGreat.png')}
+            />
+            <Places
+              price={320}
+              title="Camp For Pramuka"
+              location="Pati, Indonesia"
+              rating={4.5}
+              image={require('../../../assets/images/campPramuka.png')}
+            />
           </View>
         </View>
 
